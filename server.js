@@ -1,15 +1,15 @@
 const http = require("http");
 const url = require("url")
 
-function start(route) {
+function start(handle, route) {
     function onRequest(req, res) {
         const pathname = url.parse(req.url).pathname
         console.log("Request for " + pathname + " received.");
 
-        route(pathname)
+        const content = route(handle, pathname)
 
         res.writeHead(200, { "Content-Type": "text/plain" });
-        res.write("Hello World");
+        res.write(content);
         res.end()
     }
     
